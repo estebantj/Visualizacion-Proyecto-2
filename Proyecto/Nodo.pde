@@ -10,6 +10,15 @@ class Nodo {
 	void nuevaConexion(Conexion pNuevaConexion) {
 		conexiones.add(pNuevaConexion);
 	}
+
+	Conexion buscarConexion(String pIdentificadorLlegada) {
+		for (Conexion conexion: conexiones) {
+			if (conexion.getIdentifcadorLlegada().equals(pIdentificadorLlegada)) {
+				return conexion;
+			}
+		}
+		return null;
+	}
 	
 	@Override
 	String toString() {

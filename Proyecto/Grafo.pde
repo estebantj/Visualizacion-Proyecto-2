@@ -21,13 +21,14 @@ class Grafo {
 		}
 	}
 
-
 	void addConexion(String pIdentificadorSalida, String pIdentificadorLlegada, int pPeso) {
 		Nodo nodoSalida = buscarNodo(pIdentificadorSalida);
 		Nodo nodoLlegada = buscarNodo(pIdentificadorLlegada);
 		if (nodoSalida != null && nodoLlegada != null) {
-			Conexion nuevaConexion = new Conexion(nodoLlegada, pPeso);
-			nodoSalida.nuevaConexion(nuevaConexion);
+			if (nodoSalida.buscarConexion(pIdentificadorLlegada) == null) {
+				Conexion nuevaConexion = new Conexion(nodoLlegada, pPeso);
+				nodoSalida.nuevaConexion(nuevaConexion);
+			}
 		}
 	}
 }

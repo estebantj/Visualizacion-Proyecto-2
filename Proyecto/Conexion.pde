@@ -6,4 +6,8 @@ class Conexion {
 		llegada = pLlegada;
 		peso = pPeso;
 	}
+
+	String getIdentifcadorLlegada() {
+		return llegada.identificador;
+	}
 }
