@@ -25,6 +25,7 @@ void leerDatos() {
 	for (int i=1; i<lines.length; i++) {
 		partes = lines[i].split(",");
 		grafo.addConexion(partes[0], partes[1], Integer.parseInt(partes[2]));
+		grafo.addConexion(partes[1], partes[0], Integer.parseInt(partes[2]));
 	}
 	
 	println(grafo.nodos);
