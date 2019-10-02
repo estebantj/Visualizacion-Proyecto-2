@@ -3,7 +3,7 @@ String nombreArchivo;
 int radio;
 
 void setup() {
-	size(800,600);
+	size(1366,768);
 	background(255);
 	grafo = new Grafo();
 	nombreArchivo = "datos.txt";
@@ -37,5 +37,5 @@ void leerDatos() {
 		grafo.addConexion(partes[1], partes[0], Integer.parseInt(partes[2]));
 	}
 	
-	println(grafo.nodos); //<>//
+	println(grafo.nodos); //<>// //<>//
 }

@@ -54,8 +54,8 @@ class Grafo {
 	void cambiarPosiciones() {
 		background(255);
 		for (Nodo nodo:nodos) {
-			nodo.setX(random(10,800));
-			nodo.setY(random(10, 600));
+			nodo.setX(random(10,1366));
+			nodo.setY(random(10, 768));
 		}
 		dibujarNodos();
 		dibujarArcos();

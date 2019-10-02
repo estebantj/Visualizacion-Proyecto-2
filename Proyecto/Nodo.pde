@@ -6,8 +6,8 @@ class Nodo {
 	ArrayList<Conexion> conexiones;
 
 	Nodo(String pIdentificador, int pRadio) {
-		x = random(10, 800);
-		y = random(10, 600);
+		x = random(10, 1366);
+		y = random(10, 768);
 		r = pRadio;
 		identificador = pIdentificador;
 		conexiones = new ArrayList<Conexion>();
