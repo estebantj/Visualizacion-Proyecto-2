@@ -1,8 +1,6 @@
 class Grafo {
 	ArrayList<Nodo> nodos;
-	int radio;
 	Grafo() {
-		radio = 20;
 		nodos = new ArrayList<Nodo>();
 	}
 
@@ -14,10 +12,19 @@ class Grafo {
 		}
 		return null;
 	}
+
+	Nodo buscarNodo(float pX, float pY) {
+		for (Nodo nodo:nodos) {
+			if (dist(nodo.getX(), nodo.getY(), pX, pY) <= Proyecto.radio) {
+				return nodo;
+			}
+		}
+		return null;
+	}
 	
 	void nuevoNodo(String pIdentificador) {
 		if (buscarNodo(pIdentificador) == null) {
-			Nodo nuevo = new Nodo(pIdentificador, radio);
+			Nodo nuevo = new Nodo(pIdentificador, Proyecto.radio);
 			nodos.add(nuevo);
 		}
 	}
@@ -35,7 +42,7 @@ class Grafo {
 
 	void dibujarNodos() {
 		for(Nodo nodo:nodos) {
-			nodo.dibujar();
+			nodo.dibujar(Proyecto.colorBase);
 		}
 	}
 
@@ -54,14 +61,32 @@ class Grafo {
 	void cambiarPosiciones() {
 		background(255);
 		for (Nodo nodo:nodos) {
-			nodo.setX(random(10,1366));
-			nodo.setY(random(10, 768));
+			nodo.setX(random(10, Proyecto.windowSize[0]));
+			nodo.setY(random(10, Proyecto.windowSize[1]));
 		}
 		dibujarNodos();
 		dibujarArcos();
 	}
 
-	int getRadio() {
-		return radio;
+	void repintarNodos() {
+		for (Nodo nodo: nodos) {
+			nodo.dibujar(Proyecto.colorBase);
+		}
 	}
+
+	void enfocar(float pX, float pY) {
+		Nodo nodo_a_enfocar = buscarNodo(pX, pY);
+		if (nodo_a_enfocar != null) {
+			repintarNodos();
+			nodo_a_enfocar.dibujar(Proyecto.colorMasOpaco);
+			for (Conexion conexion:nodo_a_enfocar.conexiones) {
+				Nodo llegada = conexion.getLlegada();
+				llegada.dibujar(Proyecto.colorMasOpaco);
+			}
+		}
+	}
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	// Getters and setters
+	
 }

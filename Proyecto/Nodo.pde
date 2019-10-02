@@ -6,8 +6,8 @@ class Nodo {
 	ArrayList<Conexion> conexiones;
 
 	Nodo(String pIdentificador, int pRadio) {
-		x = random(10, 1366);
-		y = random(10, 768);
+		x = random(10, Proyecto.windowSize[0]);
+		y = random(10, Proyecto.windowSize[1]);
 		r = pRadio;
 		identificador = pIdentificador;
 		conexiones = new ArrayList<Conexion>();
@@ -26,9 +26,9 @@ class Nodo {
 		return null;
 	}
 	
-	void dibujar() {
+	void dibujar(int pColor) {
+		fill(pColor);
 		circle(x,y,r);
-		fill(100);
 	}
 
 	float getX() {

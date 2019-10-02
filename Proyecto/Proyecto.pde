@@ -1,13 +1,16 @@
 Grafo grafo;
 String nombreArchivo;
-int radio;
+static int radio;
+static int[] windowSize = {1366, 768};
+static int colorBase = 100; 
+static int colorMasOpaco = 200;
 
 void setup() {
 	size(1366,768);
 	background(255);
 	grafo = new Grafo();
 	nombreArchivo = "datos.txt";
-	radio = 10;
+	radio = 40;
 	leerDatos();
 	grafo.dibujarNodos();
 	grafo.dibujarArcos();
@@ -19,6 +22,10 @@ void draw() {
 			grafo.cambiarPosiciones();
 		}
 	}
+}
+
+void mousePressed() {
+	grafo.enfocar(mouseX, mouseY);
 }
 
 void leerDatos() {

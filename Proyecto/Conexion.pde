@@ -10,4 +10,8 @@ class Conexion {
 	String getIdentifcadorLlegada() {
 		return llegada.identificador;
 	}
+
+	Nodo getLlegada() {
+		return llegada;
+	}
 }
