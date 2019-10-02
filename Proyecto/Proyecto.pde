@@ -1,15 +1,24 @@
 Grafo grafo;
 String nombreArchivo;
+int radio;
 
 void setup() {
 	size(800,600);
+	background(255);
 	grafo = new Grafo();
 	nombreArchivo = "datos.txt";
+	radio = 10;
 	leerDatos();
+	grafo.dibujarNodos();
+	grafo.dibujarArcos();
 }
 
 void draw() {
-
+	if (keyPressed) {
+		if (key == 'r') {
+			grafo.cambiarPosiciones();
+		}
+	}
 }
 
 void leerDatos() {
@@ -28,5 +37,5 @@ void leerDatos() {
 		grafo.addConexion(partes[1], partes[0], Integer.parseInt(partes[2]));
 	}
 	
-	println(grafo.nodos);
+	println(grafo.nodos); //<>//
 }

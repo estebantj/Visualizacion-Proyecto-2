@@ -1,7 +1,8 @@
 class Grafo {
 	ArrayList<Nodo> nodos;
-
+	int radio;
 	Grafo() {
+		radio = 20;
 		nodos = new ArrayList<Nodo>();
 	}
 
@@ -16,7 +17,7 @@ class Grafo {
 	
 	void nuevoNodo(String pIdentificador) {
 		if (buscarNodo(pIdentificador) == null) {
-			Nodo nuevo = new Nodo(pIdentificador);
+			Nodo nuevo = new Nodo(pIdentificador, radio);
 			nodos.add(nuevo);
 		}
 	}
@@ -30,5 +31,37 @@ class Grafo {
 				nodoSalida.nuevaConexion(nuevaConexion);
 			}
 		}
+	}
+
+	void dibujarNodos() {
+		for(Nodo nodo:nodos) {
+			nodo.dibujar();
+		}
+	}
+
+	void dibujarArcos() {
+		Nodo salida = null;
+		Nodo llegada = null;
+		for(Nodo nodo:nodos) {
+			salida = nodo;
+			for(Conexion conexion:nodo.conexiones) {
+				llegada = conexion.llegada;
+				line(salida.getX(), salida.getY(), llegada.getX(), llegada.getY());
+			}
+		}
+	}
+
+	void cambiarPosiciones() {
+		background(255);
+		for (Nodo nodo:nodos) {
+			nodo.setX(random(10,800));
+			nodo.setY(random(10, 600));
+		}
+		dibujarNodos();
+		dibujarArcos();
+	}
+
+	int getRadio() {
+		return radio;
 	}
 }
