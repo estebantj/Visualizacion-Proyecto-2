@@ -2,8 +2,8 @@ Grafo grafo;
 String nombreArchivo;
 static int radio;
 static int[] windowSize = {1366, 768};
-static int colorBase = 100; 
-static int colorMasOpaco = 200;
+static int colorBase = 230; 
+static int colorMasOpaco = 100;
 
 void setup() {
 	size(1366,768);
