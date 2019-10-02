@@ -1,4 +1,4 @@
-class Grafo {
+class Grafo{
 	ArrayList<Nodo> nodos;
 
 	Grafo() {
@@ -31,4 +31,16 @@ class Grafo {
 			}
 		}
 	}
+
+  int getDistancia(Nodo pNodoOrigen, Nodo pNodoDestino)
+  {
+    for(Conexion conexion : pNodoOrigen.conexiones)
+    {
+      if(conexion.llegada == pNodoDestino)
+      {
+        return conexion.peso;
+      }
+    }
+    return 0;
+  }
 }

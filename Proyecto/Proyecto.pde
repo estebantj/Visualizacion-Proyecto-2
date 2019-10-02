@@ -29,4 +29,6 @@ void leerDatos() {
 	}
 	
 	println(grafo.nodos);
+  Matriz matriz = new Matriz(grafo);
+  matriz.dibujarMatriz();
 }
