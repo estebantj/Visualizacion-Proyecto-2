@@ -9,7 +9,8 @@ void setup() {
 }
 
 void draw() {
-
+  Matriz matriz = new Matriz(grafo);
+  matriz.dibujarMatriz();
 }
 
 void leerDatos() {
@@ -29,6 +30,4 @@ void leerDatos() {
 	}
 	
 	println(grafo.nodos);
-  Matriz matriz = new Matriz(grafo);
-  matriz.dibujarMatriz();
 }

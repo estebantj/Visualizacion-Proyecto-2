@@ -1,6 +1,7 @@
 int tamannoCelda = 40;
 int padding = 20;
 int colorCelda = 255;
+int colorCeldaSeleccionada = #FF4040;
 int colorMarco = #54AEF5;
 
 class Matriz
