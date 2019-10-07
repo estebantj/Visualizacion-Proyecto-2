@@ -1,8 +1,9 @@
 int tamannoCelda = 40;
-int padding = 20;
+int padding = 40;
 int colorCelda = 255;
-int colorCeldaSeleccionada = #FF4040;
 int colorMarco = #54AEF5;
+int colorCeldaSeleccionada = #FF4040;
+
 
 class Matriz
 {
@@ -68,8 +69,14 @@ class Matriz
       int x = cuadricula[i + 1][0].x;
       int y = cuadricula[0][i + 1].y;
       fill(0);
+      //Pinta marco superior
       text(grafo.nodos.get(i).identificador, x, padding + 10);
+      //Pinta marco izquierdo
       text(grafo.nodos.get(i).identificador, padding, y + 10);
+      //Asigna un nodo en el marco superior
+      cuadricula[i + 1][0].setNodo(grafo.nodos.get(i));
+      //Asigna un nodo en el marco izquierdo
+      cuadricula[0][i + 1].setNodo(grafo.nodos.get(i));
     }
   }
   
@@ -94,5 +101,89 @@ class Matriz
         }
       }
     }
+  }
+  
+  void seleccionar()
+  {
+    Celda ultimaCeldaIzq = cuadricula[0][grafo.nodos.size()];
+    Celda ultimaCeldaDer = cuadricula[grafo.nodos.size()][0];
+    if((mouseX >= cuadricula[0][1].x &&
+        mouseY >= cuadricula[0][1].y &&
+        mouseX <= ultimaCeldaIzq.x + ultimaCeldaIzq.ancho &&
+        mouseX <= ultimaCeldaIzq.x + ultimaCeldaIzq.ancho &&
+        mouseY <= ultimaCeldaIzq.y + ultimaCeldaIzq.alto)
+        ||
+        (mouseX >= cuadricula[1][0].x &&
+        mouseY >= cuadricula[1][0].y &&
+        mouseX <= ultimaCeldaDer.x + ultimaCeldaDer.ancho &&
+        mouseY <= ultimaCeldaDer.y + ultimaCeldaDer.alto))
+        {
+          println("El click fue en alguno de los dos marcos");
+          for(int i = 0; i < grafo.nodos.size(); i++)
+          {
+            if((mouseX > cuadricula[0][i + 1].x &&
+                mouseY > cuadricula[0][i + 1].y &&
+                mouseX < cuadricula[0][i + 1].x + cuadricula[0][i + 1].ancho &&
+                mouseY < cuadricula[0][i + 1].y + cuadricula[0][i + 1].alto)
+                ||
+                (mouseX > cuadricula[i + 1][0].x &&
+                 mouseY > cuadricula[i + 1][0].y &&
+                 mouseX < cuadricula[i + 1][0].x + cuadricula[0][i + 1].ancho &&
+                 mouseY < cuadricula[i + 1][0].y + cuadricula[0][i + 1].alto))
+                {
+                  cuadricula[0][i + 1].x -= 30;
+                  cuadricula[0][i + 1].ancho += 30;
+                  cuadricula[0][i + 1].desplegar(colorCeldaSeleccionada);
+                  fill(0);  
+                  text(grafo.nodos.get(i).identificador,
+                        padding - 30,
+                        cuadricula[0][i + 1].y + 10);
+                        
+                  cuadricula[i + 1][0].y -= 30;
+                  cuadricula[i + 1][0].alto += 30;
+                  cuadricula[i + 1][0].desplegar(colorCeldaSeleccionada);
+                  fill(0);
+                  text(grafo.nodos.get(i).identificador,
+                       cuadricula[i + 1][0].x,
+                       padding - 20);
+                       
+                  ArrayList<Nodo> relacionados = new ArrayList<Nodo>();
+                  for(Conexion conexion : cuadricula[i + 1][0].nodo.conexiones)
+                  {
+                    relacionados.add(conexion.llegada);             
+                  }            
+                  println(grafo.nodos.get(i).identificador + " se relaciona con:");
+                  println(relacionados.toString());
+                  
+                  for(int j = 0; j < grafo.nodos.size(); j++)
+                  {
+                    if(relacionados.contains(cuadricula[j + 1][0].nodo))
+                    {
+                      println("Celda " + (j + 1) + " está relacionada");
+                      cuadricula[j + 1][0].y -= 30;
+                      cuadricula[j + 1][0].alto += 30;
+                      cuadricula[j + 1][0].desplegar(colorMarco);
+                      fill(0);
+                      text(grafo.nodos.get(j).identificador,
+                           cuadricula[j + 1][0].x,
+                           padding - 20);
+                           
+                      println("Celda " + (j + 1) + " está relacionada");
+                      cuadricula[0][j + 1].x -= 30;
+                      cuadricula[0][j + 1].ancho += 30;
+                      cuadricula[0][j + 1].desplegar(colorMarco);
+                      fill(0);
+                      text(grafo.nodos.get(j).identificador,
+                           padding - 30,
+                           cuadricula[0][j + 1].y + 10);
+                    }
+                    else
+                    {
+                      println("Celda " + (j + 1) + " no está relacionada");               
+                    }
+                  }
+                }
+          }
+        }
   }
 }

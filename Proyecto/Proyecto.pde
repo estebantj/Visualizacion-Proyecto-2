@@ -1,16 +1,18 @@
 Grafo grafo;
 String nombreArchivo;
+Matriz matriz;
+int fondo = 200;
 
 void setup() {
 	size(800,600);
+  background(fondo);
 	grafo = new Grafo();
 	nombreArchivo = "datos.txt";
 	leerDatos();
 }
 
 void draw() {
-  Matriz matriz = new Matriz(grafo);
-  matriz.dibujarMatriz();
+  
 }
 
 void leerDatos() {
@@ -30,4 +32,13 @@ void leerDatos() {
 	}
 	
 	println(grafo.nodos);
+  matriz = new Matriz(grafo);
+  matriz.dibujarMatriz();
 }
+
+void mouseClicked() {
+  background(fondo);
+  matriz = new Matriz(grafo);
+  matriz.dibujarMatriz();
+  matriz.seleccionar();
+}  
