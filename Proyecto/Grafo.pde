@@ -1,7 +1,11 @@
 class Grafo {
 	ArrayList<Nodo> nodos;
+	int offSetActualX;
+	int offSetActualY;
 	Grafo() {
 		nodos = new ArrayList<Nodo>();
+		offSetActualX = Proyecto.xOrigen;
+		offSetActualY = Proyecto.yOrigen;
 	}
 
 	Nodo buscarNodo(String pIdentificador) {
@@ -34,7 +38,7 @@ class Grafo {
 	
 	void nuevoNodo(String pIdentificador) {
 		if (buscarNodo(pIdentificador) == null) {
-			Nodo nuevo = new Nodo(pIdentificador, Proyecto.radio);
+			Nodo nuevo = new Nodo(pIdentificador, Proyecto.radio, Proyecto.colorBase);
 			while (revisarColision(nuevo.getX(), nuevo.getY())) {
 				nuevo.cambiarPosicion();
 			}
@@ -56,7 +60,7 @@ class Grafo {
 	void dibujarNodos() {
 		stroke(0,0,0);
 		for(Nodo nodo:nodos) {
-			nodo.dibujar(Proyecto.colorBase);
+			nodo.dibujar();
 		}
 	}
 
@@ -87,7 +91,8 @@ class Grafo {
 	void repintarNodos() {
 		stroke(0,0,0);
 		for (Nodo nodo: nodos) {
-			nodo.dibujar(Proyecto.colorBase);
+			nodo.setColor(Proyecto.colorBase);
+			nodo.dibujar();
 		}
 	}
 
@@ -95,10 +100,12 @@ class Grafo {
 		Nodo nodo_a_enfocar = buscarNodo(pX, pY);
 		if (nodo_a_enfocar != null) {
 			repintarNodos();
-			nodo_a_enfocar.dibujar(Proyecto.colorMasOpaco);
+			nodo_a_enfocar.setColor(Proyecto.colorMasOpaco);
+			nodo_a_enfocar.dibujar();
 			for (Conexion conexion:nodo_a_enfocar.conexiones) {
 				Nodo llegada = conexion.getLlegada();
-				llegada.dibujar(Proyecto.colorMasOpaco);
+				llegada.setColor(Proyecto.colorMasOpaco);
+				llegada.dibujar();
 			}
 		}
 	}
@@ -124,5 +131,16 @@ class Grafo {
 		  }
 		}
 		return 0;
+	}
+
+	void actualizarCentros() {
+		int cambioX = Proyecto.xOrigen - offSetActualX;
+		int cambioY = Proyecto.yOrigen - offSetActualY;
+		for (Nodo nodo: nodos) {
+			nodo.setX(nodo.getX() + (float)(cambioX));
+			nodo.setY(nodo.getY() + (float)(cambioY));
+		}
+		offSetActualX = Proyecto.xOrigen;
+		offSetActualY = Proyecto.yOrigen;
 	}
 }
