@@ -9,13 +9,15 @@ static int radio = 40;
 static int[] windowSize = {1366, 768};
 static int colorBase = 100; 
 static int colorMasOpaco = 230;
-static int opcionElegida = 1;
+static int opcionElegida = 2;
 static int[] pocoPeso = {0,150};
 static int[] medioPeso = {151,500};
 static color[] colores;
 static ArrayList<String> nodosLeidosDeArchivo;
 static ArrayList<String[]> conexionesLeidasDeArchivo;
 static boolean graficoDibujado = false;
+Matriz matriz;
+int fondo = 200;
 
 void setup() {
 	size(1366,768);
@@ -40,6 +42,8 @@ void draw() {
 				grafo.dibujarNodos();
 				grafo.dibujarArcos();
 				graficoDibujado = true;
+			} else {
+				pintarMatriz();
 			}
 		}
 	}
@@ -79,4 +83,12 @@ void crearGrafo() {
 		grafo.addConexion(conexion[0], conexion[1], Integer.parseInt(conexion[2]));
 		grafo.addConexion(conexion[1], conexion[0], Integer.parseInt(conexion[2]));
 	}
+}
+
+void pintarMatriz()
+{
+  background(fondo);
+  matriz = new Matriz(grafo);
+  matriz.dibujarMatriz();
+  matriz.seleccionar();
 }

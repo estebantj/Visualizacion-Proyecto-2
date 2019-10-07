@@ -114,8 +114,15 @@ class Grafo {
 			return Proyecto.colores[2];
 		}
 	}
-
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	// Getters and setters
-	
+	int getDistancia(Nodo pNodoOrigen, Nodo pNodoDestino)
+	{
+		for(Conexion conexion : pNodoOrigen.conexiones)
+		{
+		  if(conexion.llegada == pNodoDestino)
+		  {
+		    return conexion.peso;
+		  }
+		}
+		return 0;
+	}
 }
