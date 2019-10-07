@@ -1,0 +1,64 @@
+import controlP5.*;
+
+ControlP5 cp5; 
+String url1, url2;
+
+Grafo grafo;
+String nombreArchivo;
+static int radio = 40;
+static int[] windowSize = {1366, 768};
+static int colorBase = 230; 
+static int colorMasOpaco = 100;
+static int opcionElegida = 1;
+static int[] pocoPeso = {0,9};
+static int[] medioPeso = {10,13};
+static int[] muchoPeso = {13, 1000};
+static String[] colores = {"Red", "Yellow", "Green"};
+
+
+void setup() {
+	size(1366,768);
+	background(255);
+	cp5 = new ControlP5(this);
+	cp5.addTextfield("textInput_1").setPosition(20, 100).setSize(200, 40).setAutoClear(false);
+	cp5.addTextfield("textInput_2").setPosition(20, 170).setSize(200, 40).setAutoClear(false);
+	cp5.addBang("Submit").setPosition(240, 170).setSize(80, 40); 
+	nombreArchivo = "datos.txt";
+	
+	leerDatos();
+	grafo = new Grafo();
+	grafo.dibujarNodos();
+	grafo.dibujarArcos();
+	
+}
+
+void draw() {
+	if (keyPressed) {
+		if (key == 'r') {
+			grafo.cambiarPosiciones();
+		}
+	}
+}
+
+void mousePressed() {
+ 	grafo.enfocar(mouseX, mouseY); 
+}
+
+void leerDatos() {
+	String[] lines = loadStrings(nombreArchivo);
+	
+	// Se cargan los nodos
+	String[] partes = lines[0].split(",");
+	for (String caracter: partes) {
+		grafo.nuevoNodo(caracter);
+	}
+
+	// Se cargan las conexiones //<>//
+	for (int i=1; i<lines.length; i++) {
+		partes = lines[i].split(",");
+		grafo.addConexion(partes[0], partes[1], Integer.parseInt(partes[2]));
+		grafo.addConexion(partes[1], partes[0], Integer.parseInt(partes[2]));
+	}
+	
+	println(grafo.nodos); //<>// //<>//
+}

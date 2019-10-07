@@ -28,6 +28,7 @@ class Nodo {
 	
 	void dibujar(int pColor) {
 		fill(pColor);
+    System.out.println(r);
 		circle(x,y,r);
 	}
 

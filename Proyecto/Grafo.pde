@@ -16,6 +16,7 @@ class Grafo {
 	Nodo buscarNodo(float pX, float pY) {
 		for (Nodo nodo:nodos) {
 			if (dist(nodo.getX(), nodo.getY(), pX, pY) <= Proyecto.radio) {
+				System.out.println(nodo.getX() + "," + nodo.getY() + " : " + pX + "," + pY);
 				return nodo;
 			}
 		}
@@ -41,6 +42,7 @@ class Grafo {
 	}
 
 	void dibujarNodos() {
+		stroke(0,0,0);
 		for(Nodo nodo:nodos) {
 			nodo.dibujar(Proyecto.colorBase);
 		}
@@ -53,6 +55,8 @@ class Grafo {
 			salida = nodo;
 			for(Conexion conexion:nodo.conexiones) {
 				llegada = conexion.llegada;
+				// Se toma el peso y se ve en que rango cae
+				stroke(revisarColor(conexion.getPeso()));
 				line(salida.getX(), salida.getY(), llegada.getX(), llegada.getY());
 			}
 		}
@@ -69,6 +73,7 @@ class Grafo {
 	}
 
 	void repintarNodos() {
+		stroke(0,0,0);
 		for (Nodo nodo: nodos) {
 			nodo.dibujar(Proyecto.colorBase);
 		}
@@ -83,6 +88,18 @@ class Grafo {
 				Nodo llegada = conexion.getLlegada();
 				llegada.dibujar(Proyecto.colorMasOpaco);
 			}
+		}
+	}
+
+	color revisarColor(int pPeso) {
+		if (Proyecto.pocoPeso[0] <= pPeso && pPeso <= Proyecto.pocoPeso[1]) {
+			return Proyecto.colores[0];
+		}
+		else if ( Proyecto.medioPeso[0] <= pPeso && pPeso <= Proyecto.medioPeso[1]) {
+			return Proyecto.colores[1];
+		}
+		else {
+			return Proyecto.colores[2];
 		}
 	}
 
