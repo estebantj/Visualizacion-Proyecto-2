@@ -32,13 +32,16 @@ void leerDatos() {
 	}
 	
 	println(grafo.nodos);
-  matriz = new Matriz(grafo);
-  matriz.dibujarMatriz();
 }
 
-void mouseClicked() {
+void mouseClicked() {  
+  //pintarMatriz();
+}
+
+void pintarMatriz()
+{
   background(fondo);
   matriz = new Matriz(grafo);
   matriz.dibujarMatriz();
   matriz.seleccionar();
-}  
+}
