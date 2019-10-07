@@ -3,6 +3,7 @@ int padding = 40;
 int colorCelda = 255;
 int colorMarco = #54AEF5;
 int colorCeldaSeleccionada = #FF4040;
+int colorTablaSeleccionada = #C6C6C6;
 
 
 class Matriz
@@ -131,6 +132,7 @@ class Matriz
                  mouseX < cuadricula[i + 1][0].x + cuadricula[0][i + 1].ancho &&
                  mouseY < cuadricula[i + 1][0].y + cuadricula[0][i + 1].alto))
                 {
+                  //Agrandar celda correspondiente en el marco izquierdo
                   cuadricula[0][i + 1].x -= 30;
                   cuadricula[0][i + 1].ancho += 30;
                   cuadricula[0][i + 1].desplegar(colorCeldaSeleccionada);
@@ -138,7 +140,7 @@ class Matriz
                   text(grafo.nodos.get(i).identificador,
                         padding - 30,
                         cuadricula[0][i + 1].y + 10);
-                        
+                  //Agrandar celda correspondiente en el marco superior                        
                   cuadricula[i + 1][0].y -= 30;
                   cuadricula[i + 1][0].alto += 30;
                   cuadricula[i + 1][0].desplegar(colorCeldaSeleccionada);
@@ -146,7 +148,7 @@ class Matriz
                   text(grafo.nodos.get(i).identificador,
                        cuadricula[i + 1][0].x,
                        padding - 20);
-                       
+                  //Agrandar celdas relacionadas
                   ArrayList<Nodo> relacionados = new ArrayList<Nodo>();
                   for(Conexion conexion : cuadricula[i + 1][0].nodo.conexiones)
                   {
@@ -159,6 +161,7 @@ class Matriz
                   {
                     if(relacionados.contains(cuadricula[j + 1][0].nodo))
                     {
+                      //Agrandar celdas relacionadas en el marco superior
                       println("Celda " + (j + 1) + " está relacionada");
                       cuadricula[j + 1][0].y -= 30;
                       cuadricula[j + 1][0].alto += 30;
@@ -167,7 +170,7 @@ class Matriz
                       text(grafo.nodos.get(j).identificador,
                            cuadricula[j + 1][0].x,
                            padding - 20);
-                           
+                      //Agrandar celdas relacionadas en el marco izquierdo     
                       println("Celda " + (j + 1) + " está relacionada");
                       cuadricula[0][j + 1].x -= 30;
                       cuadricula[0][j + 1].ancho += 30;
@@ -181,8 +184,15 @@ class Matriz
                     {
                       println("Celda " + (j + 1) + " no está relacionada");               
                     }
-                  }
-                }
+                    //Pintar celdas relacionadas de la tabla en gris
+                    cuadricula[j + 1][i + 1].desplegar(colorTablaSeleccionada);
+                    cuadricula[i + 1][j + 1].desplegar(colorTablaSeleccionada);
+                    int output = grafo.getDistancia(grafo.nodos.get(i), grafo.nodos.get(j));
+                    fill(0);
+                    text(output, cuadricula[i + 1][j + 1].x, cuadricula[i + 1][j + 1].y + 10);
+                    text(output, cuadricula[j + 1][i + 1].x, cuadricula[j + 1][i + 1].y + 10);
+                  }                                   
+                }                
           }
         }
   }
