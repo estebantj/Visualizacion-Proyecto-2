@@ -61,6 +61,7 @@ void draw() {
 	}
 	if (grafoDibujado) {
 		background(255);
+		grafo.actualizarCentros();
 		grafo.dibujarNodos();
 		grafo.dibujarArcos();
 	} else if (matrizDibujada) {
@@ -69,6 +70,7 @@ void draw() {
 }
 
 void mouseClicked() {
+	print(mouseX, mouseY);
 	if (opcionElegida == 1 && grafoDibujado) {
  		grafo.enfocar(mouseX, mouseY);
 	}
@@ -77,7 +79,6 @@ void mouseClicked() {
 void mouseDragged() {
 	xOrigen = xOrigen + (mouseX - pmouseX);
 	yOrigen = yOrigen + (mouseY - pmouseY);
-	grafo.actualizarCentros();
 }
 
 void leerDatos() {

@@ -19,8 +19,8 @@ class Grafo {
 
 	Nodo buscarNodo(float pX, float pY) {
 		for (Nodo nodo:nodos) {
-			if (dist(nodo.getX(), nodo.getY(), pX, pY) <= Proyecto.radio) {
-				System.out.println(nodo.getX() + "," + nodo.getY() + " : " + pX + "," + pY);
+			if (dist(nodo.xConOffset, nodo.yConOffset, pX, pY) <= Proyecto.radio) {
+				// System.out.println(nodo.getX() + "," + nodo.getY() + " : " + pX + "," + pY);
 				return nodo;
 			}
 		}
@@ -137,8 +137,9 @@ class Grafo {
 		int cambioX = Proyecto.xOrigen - offSetActualX;
 		int cambioY = Proyecto.yOrigen - offSetActualY;
 		for (Nodo nodo: nodos) {
-			nodo.setX(nodo.getX() + (float)(cambioX));
-			nodo.setY(nodo.getY() + (float)(cambioY));
+			nodo.xConOffset = (nodo.xConOffset + ((float)(cambioX)));
+			nodo.yConOffset = (nodo.yConOffset + ((float)(cambioY)));
+			//System.out.println(nodo.getX() + "," + nodo.getY() + " : " + nodo.xConOffset + "," + nodo.yConOffset);
 		}
 		offSetActualX = Proyecto.xOrigen;
 		offSetActualY = Proyecto.yOrigen;
