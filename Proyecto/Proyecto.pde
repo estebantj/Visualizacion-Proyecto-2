@@ -9,7 +9,7 @@ static int radio = 40;
 static int[] windowSize = {1366, 768};
 static int colorBase = 100; 
 static int colorMasOpaco = 230;
-static int opcionElegida = 1;
+static int opcionElegida = 2;
 static int[] pocoPeso = {0,150};
 static int[] medioPeso = {151,500};
 static color[] colores;
@@ -37,6 +37,7 @@ void setup() {
 	grafo = new Grafo();
 	leerDatos();
 	crearGrafo();
+	matriz = new Matriz(grafo);
 }
 
 void draw() {
@@ -114,7 +115,7 @@ void crearGrafo() {
 void pintarMatriz()
 {
   background(fondo);
-  matriz = new Matriz(grafo);
+  
   matriz.dibujarMatriz();
   matriz.seleccionar();
 }
