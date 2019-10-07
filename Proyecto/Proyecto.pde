@@ -9,15 +9,19 @@ static int radio = 40;
 static int[] windowSize = {1366, 768};
 static int colorBase = 100; 
 static int colorMasOpaco = 230;
-static int opcionElegida = 2;
+static int opcionElegida = 1;
 static int[] pocoPeso = {0,150};
 static int[] medioPeso = {151,500};
 static color[] colores;
 static ArrayList<String> nodosLeidosDeArchivo;
 static ArrayList<String[]> conexionesLeidasDeArchivo;
-static boolean graficoDibujado = false;
+static boolean grafoDibujado = false;
+static boolean matrizDibujada = false;
 Matriz matriz;
 int fondo = 200;
+static int xOrigen = 0;
+static int yOrigen = 0;
+int zoom = 1;
 
 void setup() {
 	size(1366,768);
@@ -36,23 +40,45 @@ void setup() {
 }
 
 void draw() {
+	translate(xOrigen, yOrigen);
+	scale(zoom);
 	if (keyPressed) {
 		if (key == 'r') {
 			if (opcionElegida == 1) {
 				grafo.dibujarNodos();
 				grafo.dibujarArcos();
-				graficoDibujado = true;
+				grafoDibujado = true;
 			} else {
 				pintarMatriz();
+				matrizDibujada = true;
 			}
 		}
+		if (key == ' ') {
+			zoom = 1;
+			xOrigen = 0;
+			yOrigen = 0;
+		}
+	}
+	if (grafoDibujado) {
+		background(255);
+		grafo.actualizarCentros();
+		grafo.dibujarNodos();
+		grafo.dibujarArcos();
+	} else if (matrizDibujada) {
+		pintarMatriz();
 	}
 }
 
-void mousePressed() {
-	if (opcionElegida == 1 && graficoDibujado) {
+void mouseClicked() {
+	print(mouseX, mouseY);
+	if (opcionElegida == 1 && grafoDibujado) {
  		grafo.enfocar(mouseX, mouseY);
 	}
+}
+
+void mouseDragged() {
+	xOrigen = xOrigen + (mouseX - pmouseX);
+	yOrigen = yOrigen + (mouseY - pmouseY);
 }
 
 void leerDatos() {

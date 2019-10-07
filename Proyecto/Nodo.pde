@@ -2,13 +2,19 @@ class Nodo {
 	float x;
 	float y;
 	float r;
+	float xConOffset;
+	float yConOffset;
+	int colorActual;
 	String identificador;
 	ArrayList<Conexion> conexiones;
 
-	Nodo(String pIdentificador, int pRadio) {
+	Nodo(String pIdentificador, int pRadio, int pColor) {
 		x = random(10, Proyecto.windowSize[0]);
 		y = random(10, Proyecto.windowSize[1]);
+		xConOffset = x + Proyecto.xOrigen;
+		yConOffset = y + Proyecto.yOrigen;
 		r = pRadio;
+		colorActual = pColor;
 		identificador = pIdentificador;
 		conexiones = new ArrayList<Conexion>();
 	}
@@ -31,9 +37,12 @@ class Nodo {
 		y = random(10, Proyecto.windowSize[1]);
 	}
 	
-	void dibujar(int pColor) {
-		fill(pColor);
+	void dibujar() {
+		fill(colorActual);
 		circle(x,y,r);
+		textSize(20);
+		fill(0, 102, 153);
+		text(identificador, x , y);
 	}
 
 	float getX() {
@@ -52,8 +61,15 @@ class Nodo {
 		y = pY;
 	}
 
+	void setColor(int pColor) {
+		colorActual = pColor;
+	}
+
+
 	@Override
 	String toString() {
 		return identificador;
 	}
 }
+
+// 130.92719,12.42153 : 104.0,9.0
