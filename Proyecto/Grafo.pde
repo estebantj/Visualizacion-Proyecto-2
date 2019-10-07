@@ -22,10 +22,22 @@ class Grafo {
 		}
 		return null;
 	}
+
+	boolean revisarColision(float pX, float pY) {
+		for (Nodo nodo: nodos) {
+			if( dist(nodo.getX(), nodo.getY(), pX, pY) <= Proyecto.radio ) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	void nuevoNodo(String pIdentificador) {
 		if (buscarNodo(pIdentificador) == null) {
 			Nodo nuevo = new Nodo(pIdentificador, Proyecto.radio);
+			while (revisarColision(nuevo.getX(), nuevo.getY())) {
+				nuevo.cambiarPosicion();
+			}
 			nodos.add(nuevo);
 		}
 	}

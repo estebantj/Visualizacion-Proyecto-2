@@ -25,10 +25,14 @@ class Nodo {
 		}
 		return null;
 	}
+
+	void cambiarPosicion() {
+		x = random(10, Proyecto.windowSize[0]);
+		y = random(10, Proyecto.windowSize[1]);
+	}
 	
 	void dibujar(int pColor) {
 		fill(pColor);
-    System.out.println(r);
 		circle(x,y,r);
 	}
 

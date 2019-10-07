@@ -7,14 +7,15 @@ Grafo grafo;
 String nombreArchivo;
 static int radio = 40;
 static int[] windowSize = {1366, 768};
-static int colorBase = 230; 
-static int colorMasOpaco = 100;
+static int colorBase = 100; 
+static int colorMasOpaco = 230;
 static int opcionElegida = 1;
 static int[] pocoPeso = {0,150};
 static int[] medioPeso = {151,500};
 static color[] colores;
 static ArrayList<String> nodosLeidosDeArchivo;
 static ArrayList<String[]> conexionesLeidasDeArchivo;
+static boolean graficoDibujado = false;
 
 void setup() {
 	size(1366,768);
@@ -27,28 +28,25 @@ void setup() {
 	conexionesLeidasDeArchivo = new ArrayList<String[]>();
 	nombreArchivo = "datos.csv";
 	
-grafo = new Grafo();
-	if (opcionElegida == 1) {
-		grafo = new Grafo();
-		leerDatos();
-	}
+	grafo = new Grafo();
+	leerDatos();
+	crearGrafo();
 }
 
 void draw() {
-	if (opcionElegida == 1) {
-		if (keyPressed) {
-			if (key == 'r') {
-				crearGrafo();
+	if (keyPressed) {
+		if (key == 'r') {
+			if (opcionElegida == 1) {
 				grafo.dibujarNodos();
 				grafo.dibujarArcos();
-				//grafo.cambiarPosiciones();
+				graficoDibujado = true;
 			}
 		}
 	}
 }
 
 void mousePressed() {
-	if (opcionElegida == 1) {
+	if (opcionElegida == 1 && graficoDibujado) {
  		grafo.enfocar(mouseX, mouseY);
 	}
 }
