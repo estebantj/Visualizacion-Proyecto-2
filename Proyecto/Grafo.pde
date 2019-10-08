@@ -19,6 +19,11 @@ class Grafo {
 
 	Nodo buscarNodo(float pX, float pY) {
 		for (Nodo nodo:nodos) {
+			/*
+			if ((nodo.identificador).equals("KIN")) {
+			print(1); //<>//
+			}
+			*/
 			if (dist(nodo.xConOffset, nodo.yConOffset, pX, pY) <= Proyecto.radio) {
 				// System.out.println(nodo.getX() + "," + nodo.getY() + " : " + pX + "," + pY);
 				return nodo;
@@ -98,6 +103,7 @@ class Grafo {
 
 	void enfocar(float pX, float pY) {
 		Nodo nodo_a_enfocar = buscarNodo(pX, pY);
+		print(nodo_a_enfocar, "\n");
 		if (nodo_a_enfocar != null) {
 			repintarNodos();
 			nodo_a_enfocar.setColor(Proyecto.colorMasOpaco);
@@ -139,9 +145,15 @@ class Grafo {
 		for (Nodo nodo: nodos) {
 			nodo.xConOffset = (nodo.xConOffset + ((float)(cambioX)));
 			nodo.yConOffset = (nodo.yConOffset + ((float)(cambioY)));
-			//System.out.println(nodo.getX() + "," + nodo.getY() + " : " + nodo.xConOffset + "," + nodo.yConOffset);
 		}
 		offSetActualX = Proyecto.xOrigen;
 		offSetActualY = Proyecto.yOrigen;
+	}
+
+	void imprimirCentros() {
+		for (Nodo nodo: nodos) {
+			print(nodo.x, nodo.y);
+			print('\n');
+		}
 	}
 }
