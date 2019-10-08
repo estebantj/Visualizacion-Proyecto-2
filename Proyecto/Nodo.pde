@@ -42,7 +42,7 @@ class Nodo {
 		circle(x,y,r);
 		textSize(20);
 		fill(0, 102, 153);
-		text(identificador, x , y);
+		text(identificador, x+25 , y);
 	}
 
 	float getX() {

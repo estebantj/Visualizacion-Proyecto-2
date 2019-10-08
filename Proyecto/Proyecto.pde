@@ -38,12 +38,20 @@ void setup() {
 	leerDatos();
 	crearGrafo();
 	matriz = new Matriz(grafo);
+  	cp5 = new ControlP5(this);
+  	
+	cp5.addTextfield("textInput_1").setPosition(20, 100).setSize(200, 40).setAutoClear(false);
+	cp5.addTextfield("textInput_2").setPosition(20, 170).setSize(200, 40).setAutoClear(false);
+	cp5.addTextfield("textInput_3").setPosition(20, 240).setSize(200, 40).setAutoClear(false);
+	cp5.addBang("Submit").setPosition(240, 240).setSize(80, 40);
+	
 }
 
 void draw() {
 	translate(xOrigen, yOrigen);
 	scale(zoom);
 	if (keyPressed) {
+		/*
 		if (key == 'r') {
 			if (opcionElegida == 1) {
 				grafo.dibujarNodos();
@@ -54,6 +62,7 @@ void draw() {
 				matrizDibujada = true;
 			}
 		}
+		*/
 		if (key == ' ') {
 			zoom = 1;
 			xOrigen = 0;
@@ -70,16 +79,42 @@ void draw() {
 	}
 }
 
+void Submit() {
+  String[] partesPocoPeso = (cp5.get(Textfield.class,"textInput_1").getText()).split(",");
+  pocoPeso[0] = Integer.parseInt(partesPocoPeso[0]);
+  pocoPeso[1] = Integer.parseInt(partesPocoPeso[1]);
+  String[] partesPesoMedio = (cp5.get(Textfield.class,"textInput_2").getText()).split(",");
+  medioPeso[0] = Integer.parseInt(partesPesoMedio[0]);
+  medioPeso[0] = Integer.parseInt(partesPesoMedio[0]);
+  String opcion = cp5.get(Textfield.class,"textInput_3").getText();
+  opcionElegida = Integer.parseInt(opcion);
+  cp5.get("textInput_1").remove();
+  cp5.get("textInput_2").remove();
+  cp5.get("textInput_3").remove();
+  cp5.get("Submit").remove();
+  background(255);
+  if (opcionElegida == 1) {
+  	background(255);
+  	grafo.dibujarNodos();
+	grafo.dibujarArcos();
+	grafoDibujado = true;
+  } else if (opcionElegida == 2) {
+  	pintarMatriz();
+  	matrizDibujada = true;
+  }
+}
+
 void mouseClicked() {
-	print(mouseX, mouseY);
 	if (opcionElegida == 1 && grafoDibujado) {
  		grafo.enfocar(mouseX, mouseY);
 	}
 }
 
 void mouseDragged() {
-	xOrigen = xOrigen + (mouseX - pmouseX);
-	yOrigen = yOrigen + (mouseY - pmouseY);
+	if (grafoDibujado || matrizDibujada) {
+		xOrigen = xOrigen + (mouseX - pmouseX);
+		yOrigen = yOrigen + (mouseY - pmouseY);
+	}
 }
 
 void leerDatos() {
