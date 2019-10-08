@@ -18,7 +18,7 @@ static ArrayList<String[]> conexionesLeidasDeArchivo;
 static boolean grafoDibujado = false;
 static boolean matrizDibujada = false;
 Matriz matriz;
-int fondo = 200;
+int fondo = 255;
 static int xOrigen = 0;
 static int yOrigen = 0;
 int zoom = 1;
@@ -37,6 +37,7 @@ void setup() {
 	grafo = new Grafo();
 	leerDatos();
 	crearGrafo();
+  matriz = new Matriz(grafo);
 }
 
 void draw() {
@@ -74,6 +75,12 @@ void mouseClicked() {
 	if (opcionElegida == 1 && grafoDibujado) {
  		grafo.enfocar(mouseX, mouseY);
 	}
+  if (opcionElegida == 2 && matrizDibujada)
+  {
+    matriz.reiniciarValores();
+    pintarMatriz();
+    matriz.seleccionar();
+  }
 }
 
 void mouseDragged() {
@@ -114,7 +121,5 @@ void crearGrafo() {
 void pintarMatriz()
 {
   background(fondo);
-  matriz = new Matriz(grafo);
-  matriz.dibujarMatriz();
-  matriz.seleccionar();
+  matriz.dibujarMatriz(); 
 }
