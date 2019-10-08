@@ -20,6 +20,15 @@ class Matriz
   {
     grafo = pGrafo;
     cuadricula = new Celda[grafo.nodos.size() + 10][grafo.nodos.size() + 1];
+    reiniciarValores();
+  }
+  
+  //Métodos
+  
+  /* reiniciarValores()
+  Reinicia los valores de las celdas*/
+  void reiniciarValores()
+  {
     for(int i = 0; i < grafo.nodos.size() + 1; i++)
     {
       for(int j = 0; j < grafo.nodos.size() + 1; j++)
@@ -27,12 +36,17 @@ class Matriz
         cuadricula[i][j] = new Celda(i * tamannoCelda + padding, 
                                      j * tamannoCelda + padding, 
                                      tamannoCelda, 
-                                     tamannoCelda);
+                                     tamannoCelda,
+                                     colorCelda,
+                                     i * tamannoCelda + padding,
+                                     j * tamannoCelda + padding + 10);
+        if(i == 0 || j == 0)
+        {
+          cuadricula[i][j].colorCelda = colorMarco;
+        }        
       }
     }
   }
-  
-  //Métodos
   
   /* dibujarMatriz()
   Recorre todas las celdas de la matrícula para desplegarlas en pantalla.
@@ -40,17 +54,19 @@ class Matriz
   Esta celda extra es donde se despliegan los nombres de los nodos.
   */
   void dibujarMatriz()
-  {
+  {    
     for(int i = 0; i < grafo.nodos.size() + 1; i++)
     {
       for(int j = 0; j < grafo.nodos.size() + 1; j++)
       {
         if(i == 0 || j == 0)
         {
-          cuadricula[i][j].desplegar(colorMarco);        
+          //cuadricula[i][j].colorCelda = colorMarco;
+          cuadricula[i][j].desplegar();        
           continue;
         }
-        cuadricula[i][j].desplegar(colorCelda);
+        //cuadricula[i][j].colorCelda = colorCelda;
+        cuadricula[i][j].desplegar();
       }
     }
     dibujarMarco();
@@ -66,18 +82,20 @@ class Matriz
   void dibujarMarco()
   {
     for(int i = 0; i < grafo.nodos.size(); i++)
-    {
-      int x = cuadricula[i + 1][0].x;
-      int y = cuadricula[0][i + 1].y;
-      fill(0);
-      //Pinta marco superior
-      text(grafo.nodos.get(i).identificador, x, padding + 10);
-      //Pinta marco izquierdo
-      text(grafo.nodos.get(i).identificador, padding, y + 10);
+    {      
       //Asigna un nodo en el marco superior
       cuadricula[i + 1][0].setNodo(grafo.nodos.get(i));
       //Asigna un nodo en el marco izquierdo
       cuadricula[0][i + 1].setNodo(grafo.nodos.get(i));
+      fill(0);
+      //Pinta marco superior
+      text(cuadricula[i + 1][0].nodo.identificador,
+            cuadricula[i + 1][0].textoX,
+             cuadricula[i + 1][0].textoY);
+      //Pinta marco izquierdo
+      text(cuadricula[0][i + 1].nodo.identificador,
+            cuadricula[0][i + 1].textoX,
+            cuadricula[0][i + 1].textoY);
     }
   }
   
@@ -86,19 +104,21 @@ class Matriz
     for(int i = 0; i < grafo.nodos.size(); i++)
     {
       for(int j = 0; j < grafo.nodos.size(); j++)
-      {
-        int x = cuadricula[i + 1][j + 1].x;
-        int y = cuadricula[i + 1][j + 1].y;
+      {       
         if(i == j)
-        {
+        {          
           fill(0);
-          text("0", x, y + 10);
+          text("0",
+                cuadricula[i + 1][j + 1].textoX,
+                cuadricula[i + 1][j + 1].textoY);
         }
         else
         {
           int output = grafo.getDistancia(grafo.nodos.get(i), grafo.nodos.get(j));
           fill(0);
-          text(output, x, y + 10);
+          text(output,
+                cuadricula[i + 1][j + 1].textoX,
+                cuadricula[j + 1][j + 1].textoY);
         }
       }
     }
@@ -135,15 +155,21 @@ class Matriz
                   //Agrandar celda correspondiente en el marco izquierdo
                   cuadricula[0][i + 1].x -= 30;
                   cuadricula[0][i + 1].ancho += 30;
-                  cuadricula[0][i + 1].desplegar(colorCeldaSeleccionada);
-                  fill(0);  
-                  text(grafo.nodos.get(i).identificador,
+                  cuadricula[0][i + 1].colorCelda = colorCeldaSeleccionada;
+                  cuadricula[0][i + 1].desplegar();
+                  cuadricula[0][i + 1].textoX -= 30;
+                  fill(0);
+                  text(cuadricula[0][i + 1].nodo.identificador,
+                        cuadricula[0][i + 1].textoX,
+                        cuadricula[0][i + 1].textoY);
+                  /*text(grafo.nodos.get(i).identificador,
                         padding - 30,
-                        cuadricula[0][i + 1].y + 10);
+                        cuadricula[0][i + 1].y + 10);*/
                   //Agrandar celda correspondiente en el marco superior                        
                   cuadricula[i + 1][0].y -= 30;
                   cuadricula[i + 1][0].alto += 30;
-                  cuadricula[i + 1][0].desplegar(colorCeldaSeleccionada);
+                  cuadricula[i + 1][0].colorCelda = colorCeldaSeleccionada;
+                  cuadricula[i + 1][0].desplegar();
                   fill(0);
                   text(grafo.nodos.get(i).identificador,
                        cuadricula[i + 1][0].x,
@@ -165,7 +191,8 @@ class Matriz
                       println("Celda " + (j + 1) + " está relacionada");
                       cuadricula[j + 1][0].y -= 30;
                       cuadricula[j + 1][0].alto += 30;
-                      cuadricula[j + 1][0].desplegar(colorMarco);
+                      cuadricula[j + 1][0].colorCelda = colorMarco;
+                      cuadricula[j + 1][0].desplegar();
                       fill(0);
                       text(grafo.nodos.get(j).identificador,
                            cuadricula[j + 1][0].x,
@@ -174,7 +201,8 @@ class Matriz
                       println("Celda " + (j + 1) + " está relacionada");
                       cuadricula[0][j + 1].x -= 30;
                       cuadricula[0][j + 1].ancho += 30;
-                      cuadricula[0][j + 1].desplegar(colorMarco);
+                      cuadricula[0][j + 1].colorCelda = colorMarco;
+                      cuadricula[0][j + 1].desplegar();
                       fill(0);
                       text(grafo.nodos.get(j).identificador,
                            padding - 30,
@@ -185,8 +213,10 @@ class Matriz
                       println("Celda " + (j + 1) + " no está relacionada");               
                     }
                     //Pintar celdas relacionadas de la tabla en gris
-                    cuadricula[j + 1][i + 1].desplegar(colorTablaSeleccionada);
-                    cuadricula[i + 1][j + 1].desplegar(colorTablaSeleccionada);
+                    cuadricula[j + 1][i + 1].colorCelda = colorTablaSeleccionada;
+                    cuadricula[j + 1][i + 1].desplegar();
+                    cuadricula[i + 1][j + 1].colorCelda = colorTablaSeleccionada;
+                    cuadricula[i + 1][j + 1].desplegar();
                     int output = grafo.getDistancia(grafo.nodos.get(i), grafo.nodos.get(j));
                     fill(0);
                     text(output, cuadricula[i + 1][j + 1].x, cuadricula[i + 1][j + 1].y + 10);
