@@ -68,7 +68,7 @@ class Nodo {
 
 	@Override
 	String toString() {
-		return identificador;
+		return identificador + "X: " + xConOffset + " Y: " + yConOffset;
 	}
 }
 
