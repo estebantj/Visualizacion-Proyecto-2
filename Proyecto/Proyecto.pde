@@ -37,9 +37,7 @@ void setup() {
 	grafo = new Grafo();
 	leerDatos();
 	crearGrafo();
-<<<<<<< HEAD
-  matriz = new Matriz(grafo);
-=======
+
 	matriz = new Matriz(grafo);
   	cp5 = new ControlP5(this);
   	
@@ -48,7 +46,6 @@ void setup() {
 	cp5.addTextfield("textInput_3").setPosition(20, 240).setSize(200, 40).setAutoClear(false);
 	cp5.addBang("Submit").setPosition(240, 240).setSize(80, 40);
 	
->>>>>>> Esteban
 }
 
 void draw() {
@@ -160,11 +157,6 @@ void crearGrafo() {
 void pintarMatriz()
 {
   background(fondo);
-<<<<<<< HEAD
   matriz.dibujarMatriz(); 
-=======
-  
-  matriz.dibujarMatriz();
-  matriz.seleccionar();
->>>>>>> Esteban
+
 }
