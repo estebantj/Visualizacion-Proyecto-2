@@ -138,8 +138,7 @@ class Grafo {
 		int cambioY = Proyecto.yOrigen - offSetActualY;
 		for (Nodo nodo: nodos) {
 			nodo.xConOffset = (nodo.xConOffset + ((float)(cambioX)));
-			nodo.yConOffset = (nodo.yConOffset + ((float)(cambioY)));
-			//System.out.println(nodo.getX() + "," + nodo.getY() + " : " + nodo.xConOffset + "," + nodo.yConOffset);
+			nodo.yConOffset = (nodo.yConOffset + ((float)(cambioY)));\
 		}
 		offSetActualX = Proyecto.xOrigen;
 		offSetActualY = Proyecto.yOrigen;
